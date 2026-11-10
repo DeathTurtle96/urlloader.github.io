@@ -1,707 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="utf-8" />
+    <title>Tetris</title>
+    <link rel="stylesheet" href="design/style.css" />
+    <script type="module" src="source/Main.js"></script>
+</head>
 
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link
-      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABRklEQVR42mKgOqjq75ds7510YNL0uV9nAGqniqwKYiCIHIIjcAK22BGQLRdgBWvc3fnWk/FJhrkPO1xPgGvqPfLfJMHhT1yqurvS48bPaJhjD2efgidnVwa2yv59xecvEvi0UWCXq9t0ItfP2MMZ7nwIpkA8F1n8uLxZHM6yrBH7FIl2gFXDHYsErkn2hyKLHtcKrFntk58uVQJ+kSdQnmjhID4cwLLa8+K0BXsfNWCqBOsFdo2Yldv43DBrkxd30cjnNyYBhK0SQGkI9pG4Mu40D5b374DRCAyhHqXVfTmOwivivMkJxBz5wnHCtBfGgNFC+ChWKWRf3hsQIlyEoIv4IYEo5wkgtBLRekY9DE4Uin4Keae6hydGnljPmE8kRcCine6827AMsJ1IuW9ibnlQpXLBCR/WC875m2BP+VSu3c/0m+8V08OBngc0pxcAAAAASUVORK5CYII="
-      rel="icon"
-    />
+<body>
+    <div id="container" class="mainScreen">
+        <div class="leftSide">
+            <div class="board">
+                <div class="field"></div>
+                <div class="winker"></div>
+                <div id="ghost"></div>
+                <div id="piece"></div>
+            </div>
 
-    <title>The URL Loader</title>
-    <style>
-      * {
-        font-family: sans-serif;
-        color: white;
-        box-sizing: border-box;
-      }
+            <div class="messages">
+                <div class="text">
+                    <h2>Tetris</h2>
+                    <p>Select the level</p>
+                </div>
 
-      body {
-        margin: 0;
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        background-color: black;
-      }
+                <div class="levels">
+                    choose level:<br />
+                    <div class="left" data-action="decrease"></div>
+                    <span class="leveler">1</span>
+                    <div class="right" data-action="increase"></div>
+                    <ul>
+                        <li><a href="#" data-action="start">s<u>t</u>art</a></li>
+                        <li><a href="#" data-action="highScores">h<u>i</u>gh scores</a></li>
+                        <li><a href="#" data-action="help"><u>h</u>elp</a></li>
+                    </ul>
+                </div>
 
-      .modal {
-        background-color: #222;
-        color: white;
-      }
+                <ul class="pause">
+                    <li><a href="#" data-action="endPause"><u>c</u>ontinue</a></li>
+                    <li><a href="#" data-action="finishGame"><u>n</u>ew game</a></li>
+                </ul>
 
-      /* #region Navigation Bar */
-      nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50px;
-        background-color: #222;
-        border-bottom: 1px solid #444;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        z-index: 998;
-        box-shadow: 0 2px 25px rgba(255, 0, 0, 0.6);
-      }
+                <div class="input">
+                    <p>your name:</p>
+                    <input type="text" />
+                    <a href="#" data-action="save"><u>o</u>k</a>
+                    <a class="restart" href="#" data-action="mainScreen"><u>n</u>ew game</a>
+                </div>
 
-      nav .dropdown {
-        position: relative;
-        display: inline-block;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+                <div class="high">
+                    <div class="scores"></div>
+                    <div class="none">no scores available</div>
+                    <a class="restore" href="#" data-action="restore"><u>r</u>estore</a>
+                    <a class="back" href="#" data-action="mainScreen"><u>b</u>ack</a>
+                </div>
 
-      nav #advanced {
-        height: 100%;
-      }
+                <div class="controls">
+                    <div class="left">
+                        <b>Left Arrow</b><br />
+                        <b>Right Arrow</b><br />
+                        <b>Down Arrow</b><br />
+                        <b>X</b> or <b>Up Arrow</b><br />
+                        <b>Z</b><br />
+                        <b>Ctrl</b> or <b>Space</b><br />
+                        <b>P</b><br />
+                        <b>M</b><br />
+                        <b>Enter</b>
+                    </div>
+                    <div class="middle">
+                        - <br /> - <br /> - <br /> - <br /> - <br />
+                        - <br /> - <br /> - <br /> -
+                    </div>
+                    <div class="right">
+                        Move left<br />
+                        Move right<br />
+                        Soft drop<br />
+                        Rotate right<br />
+                        Rotate left<br />
+                        Hard drop<br />
+                        Pause game<br />
+                        Mute/Unmute<br />
+                        Start playing
+                    </div>
+                    <p>Use the links or keys (underline letters) to navigate throught the screens.</p>
+                    <a class="back" href="#" data-action="mainScreen"><u>b</u>ack</a>
+                </div>
+            </div>
+        </div>
 
-      nav button {
-        background-color: #222;
-        font-weight: bold;
-        transition: background-color 200ms ease;
-        color: white;
-        border: none;
-        padding: 10px 25px;
-        cursor: pointer;
-        font-size: 16px;
-        height: 100%;
-      }
+        <div class="rightSide">
+            <div class="next">
+                <div class="content">
+                    <div id="next"></div>
+                </div>
+                <div class="title">next</div>
+            </div>
+            <div class="level">
+                <div class="content">1</div>
+                <div class="title">level</div>
+            </div>
+            <div class="score">
+                <div class="content">0</div>
+                <div class="title">score</div>
+            </div>
+            <div class="lines">
+                <div class="content">0</div>
+                <div class="title">lines</div>
+            </div>
 
-      nav input[type="radio"] {
-        display: none;
-      }
-
-      nav span {
-        user-select: none;
-      }
-
-      nav ul.dropdown-menu {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        list-style: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        overflow: hidden;
-        transform: scaleY(0);
-        transform-origin: top;
-        transition: transform 200ms ease;
-        overflow-y: auto;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-      }
-
-      nav ul.dropdown-menu {
-        display: flex;
-        flex-direction: column;
-        margin: 0;
-      }
-
-      nav ul.dropdown-menu label {
-        padding: 10px 15px;
-        width: auto;
-        text-align: center;
-        cursor: pointer;
-        background-color: #333;
-        transition: background-color 200ms ease;
-      }
-
-      nav ul.dropdown-menu label:hover {
-        background-color: #444;
-      }
-
-      nav button:hover {
-        background-color: #333;
-      }
-
-      nav .dropdown:hover ul.dropdown-menu {
-        transform: scaleY(1);
-      }
-
-      nav ul.dropdown-menu input[type="radio"]:checked + span.custom-radio {
-        font-weight: bold;
-        text-decoration: underline;
-        text-shadow: 0 0 10px green;
-      }
-
-      nav ul.dropdown-menu#bookmarks label[aria-disabled="true"] {
-        pointer-events: none;
-        cursor: not-allowed;
-      }
-
-      nav ul.dropdown-menu label input:disabled + span.custom-radio {
-        pointer-events: none;
-        color: #888;
-        cursor: not-allowed;
-      }
-
-      nav ul.dropdown-menu label:has(> input:disabled) {
-        cursor: not-allowed;
-      }
-
-      nav
-        ul.dropdown-menu
-        #bookmarks
-        label[aria-disabled="true"]
-        span.custom-radio {
-        pointer-events: none;
-        color: #888;
-        cursor: not-allowed;
-      }
-
-      nav ul.dropdown-menu#bookmarks label span.delete-btn {
-        background-color: transparent;
-        transition: background-color 200ms ease;
-      }
-
-      nav ul.dropdown-menu#bookmarks label span.delete-btn:hover {
-        background-color: #555;
-      }
-
-      nav input#admin-pw {
-        padding: 5px;
-        width: 200px;
-        margin: auto 10px;
-        background-color: #333;
-        border: 1px solid #444;
-        outline: none;
-        transition: border-color 500ms ease, box-shadow 500ms ease;
-      }
-
-      nav input#admin-pw:hover {
-        border-color: #666;
-        box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-      }
-
-      nav input#admin-pw:focus {
-        border-color: white;
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
-      }
-
-      nav #the-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        margin-left: auto;
-        margin-right: 15px;
-        box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red;
-        background-color: red;
-        transition: box-shadow 300ms linear, background-color 300ms linear;
-      }
-
-      nav #the-dot[title="Connected to server"] {
-        box-shadow: 0 0 5px green, 0 0 10px green, 0 0 15px green;
-        background-color: green;
-      }
-      /* #endregion */
-
-      /* #region URL Bar */
-      #url-bar-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: auto;
-      }
-
-      #url-bar-container h1 {
-        text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-      }
-
-      input#url-bar {
-        width: 60vw;
-        height: 40px;
-        border-radius: 20px;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #444;
-        background-color: #111;
-        color: white;
-        transition: border-color 500ms ease, box-shadow 500ms ease;
-        outline: none;
-      }
-
-      input#url-bar:hover {
-        border-color: #666;
-        box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
-      }
-
-      input#url-bar:focus {
-        border-color: white;
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
-      }
-
-      input#url-bar:disabled {
-        background-color: #333;
-        color: #888;
-        cursor: wait;
-      }
-      /* #endregion */
-    </style>
-  </head>
-  <body>
-    <nav>
-      <!-- URL Handling Mode -->
-      <div class="dropdown">
-        <button>Mode</button>
-        <ul class="dropdown-menu">
-          <label>
-            <input type="radio" name="mode" value="Embed" checked />
-            <span class="custom-radio">Embed</span>
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="mode"
-              value="Proxy"
-              id="proxy-btn"
-              disabled
-            />
-            <span class="custom-radio">Proxy (WIP)</span>
-          </label>
-        </ul>
-      </div>
-      <!-- Bookmarks -->
-      <div class="dropdown">
-        <button>Bookmarks</button>
-        <ul class="dropdown-menu" id="bookmarks">
-          <label id="new-bookmark">
-            <span
-              class="custom-radio"
-              style="font-style: italic"
-              name="create-bookmark"
-            >
-              Create New Bookmark...
-            </span>
-          </label>
-        </ul>
-      </div>
-      <!-- Advanced Feature Container -->
-      <div id="advanced"></div>
-      <!-- Admin Panel -->
-      <input type="password" id="admin-pw" placeholder="Admin Panel" />
-      <!-- Online/Offline Status -->
-      <div id="the-dot" title="Not connected to server"></div>
-    </nav>
-
-    <div id="url-bar-container">
-      <h1>The URL Loader</h1>
-      <input type="text" id="url-bar" placeholder="Enter your URL here!" />
+            <div class="audio" data-action="sound">
+                <div class="waves">
+                    <div></div><div></div>
+                    <div></div><div></div>
+                </div>
+                <div class="triangle"></div>
+                <div class="box"></div>
+            </div>
+            <a class="pauser" href="#" data-action="pause"><u>p</u>ause</a>
+        </div>
     </div>
 
-    <!-- An access code is required for the advanced content to show up. See it in "adv.html". -->
 
-    <!-- Initialization -->
-    <script>
-      const urlBar = document.querySelector("input#url-bar");
-      urlBar.focus();
+    <div class="tetriminos">
+        <div id="i">
+            <div class="r1"    data-top="0" data-left="2"></div>
+            <div class="r3"    data-top="0" data-left="1"></div>
 
-      const SERVER_URL = "http://96.227.220.36:3000/";
+            <div class="r0"    data-top="1" data-left="0"></div>
+            <div class="r0 r3" data-top="1" data-left="1"></div>
+            <div class="r0 r1" data-top="1" data-left="2"></div>
+            <div class="r0"    data-top="1" data-left="3"></div>
 
-      // #region Saving URL Mode
-      if (!window.localStorage.getItem("url-loader:url-mode")) {
-        window.localStorage.setItem("url-loader:url-mode", "embed");
-      }
+            <div class="r2"    data-top="2" data-left="0"></div>
+            <div class="r2 r3" data-top="2" data-left="1"></div>
+            <div class="r1 r2" data-top="2" data-left="2"></div>
+            <div class="r2"    data-top="2" data-left="3"></div>
 
-      const mode = window.localStorage.getItem("url-loader:url-mode");
-      const modeRadios = document.querySelectorAll("nav input[name='mode']");
-      modeRadios[0].addEventListener("change", () => {
-        if (modeRadios[0].checked) {
-          window.localStorage.setItem("url-loader:url-mode", "embed");
-        }
-      });
-      modeRadios[1].addEventListener("change", () => {
-        if (modeRadios[1].checked) {
-          window.localStorage.setItem("url-loader:url-mode", "proxy");
-        }
-      });
+            <div class="r1"    data-top="3" data-left="2"></div>
+            <div class="r3"    data-top="3" data-left="1"></div>
+        </div>
 
-      switch (mode) {
-        case "embed":
-          modeRadios[0].checked = true;
-          break;
-        case "proxy":
-          modeRadios[1].checked = true;
-      }
-      // #endregion
+        <div id="j">
+            <div class="r0"    data-top="0" data-left="0"></div>
+            <div class="r1 r3" data-top="0" data-left="1"></div>
+            <div class="r1"    data-top="0" data-left="2"></div>
 
-      window.addEventListener("beforeunload", (e) => {
-        e.preventDefault();
-        e.returnValue = "";
-      });
-      document.addEventListener("DOMContentLoaded", () => {
-        window.originalDocument = window.opener
-          ? window.opener.originalDocument
-          : document.documentElement.cloneNode(true);
-      });
-    </script>
+            <div class="r0 r2" data-top="1" data-left="0"></div>
+            <div class="r0 r1 r2 r3" data-top="1" data-left="1"></div>
+            <div class="r0 r2" data-top="1" data-left="2"></div>
 
-    <!-- Modal Patching -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      window.alert = async (title, text) => {
-        await Swal.fire({
-          title,
-          text,
-          confirmButtonText: "OK",
-          heightAuto: false,
-          customClass: {
-            popup: "modal",
-          },
-        });
-      };
-      window.alertErr = async (title, text) => {
-        await Swal.fire({
-          icon: "error",
-          title,
-          text,
-          confirmButtonText: "OK",
-          heightAuto: false,
-          customClass: {
-            popup: "modal",
-          },
-        });
-      };
-      window.confirm = async (title, text) => {
-        const result = await Swal.fire({
-          title,
-          text,
-          showCancelButton: true,
-          confirmButtonText: "OK",
-          heightAuto: false,
-          customClass: {
-            popup: "modal",
-          },
-        });
-        return result.isConfirmed;
-      };
-      window.prompt = async (title, text) => {
-        const result = await Swal.fire({
-          title,
-          text,
-          input: "text",
-          inputPlaceholder: "Enter text...",
-          showCancelButton: true,
-          heightAuto: false,
-          customClass: {
-            popup: "modal",
-          },
-        });
-        if (result.isConfirmed) {
-          return result.value;
-        }
-      };
-    </script>
+            <div class="r3"    data-top="2" data-left="0"></div>
+            <div class="r1 r3" data-top="2" data-left="1"></div>
+            <div class="r2"    data-top="2" data-left="2"></div>
+        </div>
 
-    <!-- URL Handling(direct type-in) -->
-    <script>
-      async function openURL(url) {
-        url = url.trim();
-        ogUrl = url;
-        if (!url) return;
+        <div id="l">
+            <div class="r3"    data-top="0" data-left="0"></div>
+            <div class="r1 r3" data-top="0" data-left="1"></div>
+            <div class="r0"    data-top="0" data-left="2"></div>
 
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-          url = "https://" + url;
-        }
+            <div class="r0 r2" data-top="1" data-left="0"></div>
+            <div class="r0 r1 r2 r3" data-top="1" data-left="1"></div>
+            <div class="r0 r2" data-top="1" data-left="2"></div>
 
-        const bookmarkBtns = document.querySelectorAll("#bookmarks label");
-        bookmarkBtns.forEach((btn) => {
-          btn.setAttribute("aria-disabled", true);
-          btn.style.pointerEvents = "none";
-        });
-        urlBar.disabled = true;
-        urlBar.value = "Loading...";
+            <div class="r2"    data-top="2" data-left="0"></div>
+            <div class="r1 r3" data-top="2" data-left="1"></div>
+            <div class="r1"    data-top="2" data-left="2"></div>
+        </div>
 
-        let isValid = false;
-        try {
-          const response = await fetch(url, {
-            method: "GET",
-            mode: "no-cors",
-          });
+        <div id="o">
+            <div class="r0 r1 r2 r3" data-top="0" data-left="1"></div>
+            <div class="r0 r1 r2 r3" data-top="0" data-left="2"></div>
 
-          isValid = true;
-        } catch (error) {
-          isValid = false;
-        }
+            <div class="r0 r1 r2 r3" data-top="1" data-left="1"></div>
+            <div class="r0 r1 r2 r3" data-top="1" data-left="2"></div>
+        </div>
 
-        if (!isValid) {
-          url =
-            "https://www.google.com/search?igu=1&q=" +
-            encodeURIComponent(ogUrl);
-        }
+        <div id="s">
+            <div class="r3"    data-top="0" data-left="0"></div>
+            <div class="r0 r1" data-top="0" data-left="1"></div>
+            <div class="r0"    data-top="0" data-left="2"></div>
 
-        const newWindow = window.open("about:blank", "_blank");
+            <div class="r0 r3" data-top="1" data-left="0"></div>
+            <div class="r0 r1 r2 r3" data-top="1" data-left="1"></div>
+            <div class="r1 r2" data-top="1" data-left="2"></div>
 
-        const embeddedPage = document.createElement("embed");
-        embeddedPage.src = url;
-        embeddedPage.type = "text/html";
-        embeddedPage.style.width = "100vw";
-        embeddedPage.style.height = "100vh";
-        embeddedPage.style.border = "none";
-        newWindow.document.body.style.margin = "0";
+            <div class="r2"    data-top="2" data-left="0"></div>
+            <div class="r2 r3" data-top="2" data-left="1"></div>
+            <div class="r1"    data-top="2" data-left="2"></div>
+        </div>
 
-        newWindow.document.body.appendChild(embeddedPage);
-        newWindow.document.title = "Loaded URL: " + url;
+        <div id="t">
+            <div class="r0 r1 r3"    data-top="0" data-left="1"></div>
 
-        const iconLink = document.createElement("link");
-        iconLink.rel = "icon";
-        newWindow.document.head.append(iconLink);
+            <div class="r0 r2 r3"    data-top="1" data-left="0"></div>
+            <div class="r0 r1 r2 r3" data-top="1" data-left="1"></div>
+            <div class="r0 r1 r2"    data-top="1" data-left="2"></div>
 
-        eval(window.sessionStorage.getItem("url-loader:cloaknewtab"));
+            <div class="r1 r2 r3"    data-top="2" data-left="1"></div>
+        </div>
 
-        newWindow.addEventListener("beforeunload", (e) => {
-          e.preventDefault();
-          e.returnValue = "";
-        });
-        bookmarkBtns.forEach((btn) => {
-          btn.setAttribute("aria-disabled", false);
-          btn.style.pointerEvents = "auto";
-        });
-        urlBar.disabled = false;
-        urlBar.value = "";
-        urlBar.blur();
-      }
+        <div id="z">
+            <div class="r0"    data-top="0" data-left="0"></div>
+            <div class="r0 r3" data-top="0" data-left="1"></div>
+            <div class="r1"    data-top="0" data-left="2"></div>
 
-      urlBar.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          openURL(urlBar.value);
-        }
-      });
-    </script>
+            <div class="r2 r3" data-top="1" data-left="0"></div>
+            <div class="r0 r1 r2 r3" data-top="1" data-left="1"></div>
+            <div class="r0 r1" data-top="1" data-left="2"></div>
 
-    <!-- Bookmarks -->
-    <script>
-      const bmKey = "url-loader:bookmark:";
-      const bookmarks = document.querySelector("#bookmarks");
-      let bookmarkNames = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        if (key.startsWith(bmKey)) {
-          key = key.replace(bmKey, "");
-          bookmarkNames.push(key);
-          const value = localStorage.getItem(bmKey + key);
-          const label = document.createElement("label");
-          label.name = "bookmark";
-          label.innerHTML = `<span class="custom-radio">${key}</span><span class="delete-btn material-icons" title="Delete Bookmark">delete</span>`;
-          label.addEventListener("click", () => {
-            console.log("Opening bookmark:", value);
-            openURL(value);
-          });
-          bookmarks.prepend(label);
-          key = bmKey + key;
-          label
-            .querySelector(".delete-btn")
-            .addEventListener("click", async (e) => {
-              e.stopPropagation();
-              if (
-                await confirm("Are you sure you want to delete this bookmark?")
-              ) {
-                localStorage.removeItem(key);
-                label.remove();
-                bookmarkNames = bookmarkNames.filter((bm) => bm !== name);
-              }
-            });
-        }
-      }
-      document
-        .querySelector("#new-bookmark")
-        .addEventListener("click", async () => {
-          const name = await window.prompt("Enter bookmark name:");
-          if (name) {
-            const url = await window.prompt("Enter bookmark URL:");
-            if (url) {
-              let exists = false;
-              bookmarkNames.forEach((bm) => {
-                if (bm === name) {
-                  exists = true;
-                }
-              });
-              if (
-                exists &&
-                !(await confirm(
-                  "Bookmark with this name already exists.",
-                  "Do you want to overwrite it?"
-                ))
-              ) {
-                await alert("Bookmark canceled.");
-                return;
-              } else {
-                const els = document.querySelectorAll("nav #bookmarks span");
-                for (let el of els) {
-                  if (el.textContent === name) {
-                    el.parentElement.remove();
-                  }
-                }
-              }
-              const key = bmKey + name;
-              localStorage.setItem(key, url);
-              const label = document.createElement("label");
-              label.name = "bookmark";
-              label.innerHTML = `<span class="custom-radio">${name}</span><span class="delete-btn material-icons" title="Delete Bookmark">delete</span>`;
-              label.addEventListener("click", () => {
-                openURL(url);
-              });
-              bookmarkNames.push(name);
-              bookmarks.prepend(label);
-              label
-                .querySelector(".delete-btn")
-                .addEventListener("click", async (e) => {
-                  e.stopPropagation();
-                  if (
-                    await confirm(
-                      "Are you sure you want to delete this bookmark?"
-                    )
-                  ) {
-                    localStorage.removeItem(key);
-                    label.remove();
-                    bookmarkNames = bookmarkNames.filter((bm) => bm !== name);
-                  }
-                });
-            } else {
-              await alert("Bookmark URL cannot be empty.");
-            }
-          }
-        });
-    </script>
-
-    <!-- Importing Advanced Features(from server) -->
-    <script type="module">
-      import io from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
-      const statusDot = document.querySelector("#the-dot");
-
-      window.socket = io(`${SERVER_URL}`, {
-        auth: {
-          token: window.localStorage.getItem("url-loader:authtoken"),
-        },
-      });
-
-      window.socket.on("connect_error", (err) => {
-        if (err.message.startsWith("no-reconnect:")) {
-          window.socket.io.opts.reconnection = false;
-          console.log(`Cannot use advanced features.\nError: ${err.message}`);
-        }
-      });
-
-      window.socket.io.on("reconnect_attempt", () => {
-        window.socket.auth.token = window.localStorage.getItem(
-          "url-loader:authtoken"
-        );
-      });
-
-      window.socket.on("welcome", (data) => {
-        console.log("Connected to server!");
-        console.log(`Welcome token: ${data.data}`);
-        window.localStorage.setItem("url-loader:authtoken", data.data);
-        window.socket.emit("verify-token", { token: data.data });
-        statusDot.title = "Connected to server";
-      });
-
-      window.socket.on("error", (data) => {
-        console.log(data.data);
-      });
-
-      window.socket.on("disconnect", () => {
-        statusDot.title = "Not connected to server";
-      });
-
-      let adv = "";
-      let loaded = false;
-      window.socket.on("advanced-chunk", (data) => {
-        adv += data.data;
-      });
-      window.socket.on("advanced-end", () => {
-        if (!loaded) {
-          const wrapper = document.querySelector("#advanced");
-          wrapper.innerHTML = "";
-
-          const temp = document.createElement("div");
-          temp.innerHTML = adv;
-
-          for (const node of temp.childNodes) {
-            if (node.tagName !== "SCRIPT") {
-              wrapper.appendChild(node);
-            }
-          }
-
-          temp.querySelectorAll("script").forEach((oldScript) => {
-            const newScript = document.createElement("script");
-            if (oldScript.type) newScript.type = oldScript.type;
-            if (oldScript.src) {
-              newScript.src = oldScript.src;
-            } else {
-              newScript.textContent = oldScript.textContent;
-            }
-            wrapper.appendChild(newScript);
-          });
-          loaded = true;
-        }
-      });
-    </script>
-
-    <!-- Admin Commands -->
-    <script>
-      const password = document.querySelector("#admin-pw");
-      password.addEventListener("keydown", async (e) => {
-        if (e.key === "Enter") {
-          const res = await fetch(`${SERVER_URL}/admin/check-pw`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              pass: password.value,
-            }),
-          });
-          if (res.ok) {
-            const input = await window.prompt("Admin command route:");
-            if (!input) {
-              if (input === "") {
-                await alert("No command specified.");
-                password.value = "";
-                return;
-              }
-              await alert("Command canceled.");
-              password.value = "";
-              return;
-            }
-            let cmdRes;
-            try {
-              cmdRes = await fetch(`${SERVER_URL}/admin/${input}`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ pass: password.value }),
-              });
-              if (!cmdRes.ok)
-                throw new Error(
-                  `HTTP Error: ${cmdRes.status} ${cmdRes.statusText}`
-                );
-            } catch (err) {
-              await window.alertErr(err.message);
-            }
-            const data = await cmdRes.json();
-            eval(data.action);
-            alert("Success:", JSON.stringify(data));
-          } else {
-            alert("no.");
-          }
-          password.value = "";
-        }
-      });
-    </script>
-  </body>
+            <div class="r3"    data-top="2" data-left="0"></div>
+            <div class="r1 r2" data-top="2" data-left="1"></div>
+            <div class="r2"    data-top="2" data-left="2"></div>
+        </div>
+    </div>
+</body>
 </html>
